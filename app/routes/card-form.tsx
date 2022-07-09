@@ -15,14 +15,14 @@ export const loader: LoaderFunction = async () => {
 export default function FormCard() {
   const [cardQuantity, setCardQuantity] = useState(0);
   const [cardAmount, setCardAmount] = useState(0);
-  const csvUploader = useFetcher();
+  const contactFileUploader = useFetcher();
   const loaderData = useLoaderData() as LoaderData;
 
   const submitUpload = (formData: FormData) => {
-    csvUploader.submit(formData, {
+    contactFileUploader.submit(formData, {
       method: "post",
       encType: "multipart/form-data",
-      action: "api/parse-csv",
+      action: "api/parse-contact-file",
     });
   };
 
@@ -77,7 +77,7 @@ export default function FormCard() {
           />
         </label>
 
-        <csvUploader.Form
+        <contactFileUploader.Form
           onDragOver={(e) => {
             e.preventDefault();
           }}
@@ -89,7 +89,7 @@ export default function FormCard() {
             if (!file) return;
 
             const formData = new FormData();
-            formData.set("csv", file);
+            formData.set("contact-file", file);
 
             submitUpload(formData);
           }}
@@ -100,17 +100,17 @@ export default function FormCard() {
           }}
         >
           <div>
-            <label htmlFor="csv">
+            <label htmlFor="contact-file">
               <span>Upload a file</span>
-              <input id="csv" name="csv" type="file" />
+              <input id="contact-file" name="contact-file" type="file" />
             </label>
             <p>or drag and drop</p>
           </div>
-          <p>CSV, up to 10MB</p>
-        </csvUploader.Form>
+          <p>XLSX, CSV up to 5MB</p>
+        </contactFileUploader.Form>
 
         <p>Liste des gens : </p>
-        <pre>{JSON.stringify(csvUploader.data)}</pre>
+        <pre>{JSON.stringify(contactFileUploader.data)}</pre>
 
         <div
           style={{
