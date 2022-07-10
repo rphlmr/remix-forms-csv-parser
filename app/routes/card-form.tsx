@@ -18,6 +18,9 @@ export default function FormCard() {
   const contactFileUploader = useFetcher();
   const loaderData = useLoaderData() as LoaderData;
 
+  const totalCardQuantity =
+    (cardQuantity || contactFileUploader.data?.length) ?? 0;
+
   const submitUpload = (formData: FormData) => {
     contactFileUploader.submit(formData, {
       method: "post",
@@ -120,8 +123,8 @@ export default function FormCard() {
             marginTop: 50,
           }}
         >
-          <p>Quantité de cartes : {cardQuantity}</p>
-          <p>Prix final de l'opération' : {cardQuantity * cardAmount}€</p>
+          <p>Quantité de cartes : {totalCardQuantity}</p>
+          <p>Prix final de l'opération' : {totalCardQuantity * cardAmount}€</p>
         </div>
       </Form>
     </div>

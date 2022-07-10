@@ -20,13 +20,8 @@ export function isUploadedFile(file: unknown): file is UploadedFile {
 export const uploadHandler = unstable_composeUploadHandlers(
   unstable_createFileUploadHandler({
     maxPartSize: 5_000_000,
-    file: ({ filename, contentType }) => {
-      if (!Object.values(allowedMimeTypes).includes(contentType)) {
-        return;
-      }
-
-      console.log(filename);
-      return filename;
-    },
+    file: ({ filename }) => `contact-uploads/${filename}`,
+    filter: ({ contentType }) =>
+      Object.values(allowedMimeTypes).includes(contentType),
   })
 );
